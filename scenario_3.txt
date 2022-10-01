@@ -1,0 +1,5 @@
+In RStudio, find your terminal (might be a tab right next to your console), and type either of the following:
+
+quarto render scenario_2.qmd --to pdf
+
+quarto render scenario_2.qmd --to docx
