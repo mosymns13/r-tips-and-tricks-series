@@ -1,0 +1,68 @@
+---
+title: "Scenario 4"
+format: html
+editor: visual
+---
+
+## Install Packages (if necessary) 
+```{r installing packages}
+# install.packages("tidyverse") # will take some times since multiple packages in one
+# install.packages("ggridges")
+# install.packages("janitor")
+```
+
+## Calling all libraries 
+
+```{r calling libraries}
+
+library(tidyverse)
+library(ggridges)
+library(janitor)
+
+```
+## Bringing in the data
+
+```{r uploadind data}
+
+wnba_2019_per_game_stats <- read_csv("Data/2019_wbna_per_game_stats.csv") |> 
+  clean_names() # just want to make the names all lower case and camel case style
+
+```
+I am going to focus on the 3-point attempts per game stat and look at differences by position in this season.
+
+## The before times
+
+Here is a histogram with mini plots separated
+
+```{r histogram 1}
+
+ggplot(wnba_2019_per_game_stats, aes(x = x3pa)) +
+  geom_histogram() +
+  facet_wrap(pos ~.) +
+  labs(title = "3-Point Field Goal Attempts Per Game")
+
+```
+And here they are all in one line
+```{r histogram 2}
+ggplot(wnba_2019_per_game_stats, aes(x = x3pa)) +
+  geom_histogram() +
+  facet_grid (pos ~.) + # facet_grid gives you a different visual than facet_wrap
+  labs(title = "3-Point Field Goal Attempts Per Game")
+
+```
+Either one, I don't have a sense of what I am looking at. I would need to adjust the bins as well to make it clearer and do some extra work with the axis to make it less cluttered. 
+
+## The after times
+
+Here is the same data in density plots
+
+```{r density plot}
+
+# I am adding a y variable here
+ggplot(wnba_2019_per_game_stats, aes(x = x3pa, y = pos)) +
+  # and I am changing the plot type here
+  geom_density_ridges() +
+  labs(title = "3-Point Field Goal Attempts Per Game")
+
+```
+I can tell the differences in 3-point attempts by position much easier with this plot. 
